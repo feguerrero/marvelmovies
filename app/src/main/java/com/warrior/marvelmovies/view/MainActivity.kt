@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.warrior.marvelmovies.MyApplication
 import com.warrior.marvelmovies.R
 import com.warrior.marvelmovies.presenter.ViewContract
-import kotlinx.android.synthetic.main.activity_main.loadingProgressBar
-import kotlinx.android.synthetic.main.activity_main.moviesRecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ViewContract.View {
@@ -20,11 +19,16 @@ class MainActivity : AppCompatActivity(), ViewContract.View {
         super.onCreate(savedInstanceState)
         (applicationContext as MyApplication).appComponent.inject(this)
         setContentView(R.layout.activity_main)
-        presenter.setup(this)
+        presenter.bind(this)
         setupRecyclerView()
         savedInstanceState?.getParcelable<DisplayableMoviesWrapper>(MOVIE_LIST_PARAM)?.list?.let {
             presenter.saveState(it)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.unbind()
     }
 
     private fun setupRecyclerView() {

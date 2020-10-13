@@ -4,10 +4,7 @@ import com.warrior.marvelmovies.model.GetMoviesUseCase
 import com.warrior.marvelmovies.model.remote.Movie
 import com.warrior.marvelmovies.view.DisplayableMovie
 import com.warrior.marvelmovies.view.DisplayableMoviesWrapper
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -21,8 +18,14 @@ class MoviesPresenter(
     private var view: ViewContract.View? = null
     private var displayableMovies: List<DisplayableMovie>? = null
 
-    override fun setup(view: ViewContract.View) {
+
+    override fun bind(view: ViewContract.View) {
         this.view = view
+    }
+
+    override fun unbind() {
+        coroutineContext.cancel()
+        view = null
     }
 
     override fun loadMovies() {

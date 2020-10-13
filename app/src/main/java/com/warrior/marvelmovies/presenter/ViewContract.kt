@@ -22,7 +22,9 @@ interface ViewContract {
 
         fun loadMovies()
 
-        fun setup(view: View)
+        fun bind(view: View)
+
+        fun unbind()
 
         fun getState(): DisplayableMoviesWrapper
 
