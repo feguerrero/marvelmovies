@@ -7,7 +7,6 @@ import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 /**
  * Author: Felipe Guerrero
  */
@@ -23,4 +22,4 @@ class AppModule {
     }
 }
 
-const val BASE_URL = "https://api.themoviedb.org/4/list/"
+const val BASE_URL = "https://api.themoviedb.org/"
