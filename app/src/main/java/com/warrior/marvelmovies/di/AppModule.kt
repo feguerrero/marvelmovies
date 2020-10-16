@@ -1,14 +1,13 @@
 package com.warrior.marvelmovies.di
 
 import com.google.gson.GsonBuilder
-import com.warrior.marvelmovies.model.GetMoviesUseCase
+import com.warrior.marvelmovies.model.business.GetMoviesUseCase
 import com.warrior.marvelmovies.model.remote.MoviesService
 import com.warrior.marvelmovies.presenter.MoviesPresenter
 import com.warrior.marvelmovies.presenter.ViewContract
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -1,9 +1,9 @@
 package com.warrior.marvelmovies.presenter
 
-import com.warrior.marvelmovies.model.GetMoviesUseCase
-import com.warrior.marvelmovies.model.remote.Movie
+import com.warrior.marvelmovies.model.business.GetMoviesUseCase
 import com.warrior.marvelmovies.view.DisplayableMovie
 import com.warrior.marvelmovies.view.DisplayableMoviesWrapper
+import com.warrior.marvelmovies.view.mapToDisplayableMovie
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -55,12 +55,4 @@ class MoviesPresenter(
         this.displayableMovies = list
         view?.hideLoading()
     }
-}
-
-fun Movie.mapToDisplayableMovie(): DisplayableMovie {
-    return DisplayableMovie(
-        title,
-        overview,
-        image
-    )
 }
