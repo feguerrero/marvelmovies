@@ -1,6 +1,7 @@
 package com.warrior.marvelmovies.view
 
 import android.os.Parcelable
+import com.warrior.marvelmovies.model.remote.Movie
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -17,3 +18,11 @@ data class DisplayableMovie(
 data class DisplayableMoviesWrapper(
     val list: List<DisplayableMovie>?
 ) : Parcelable
+
+fun Movie.mapToDisplayableMovie(): DisplayableMovie {
+    return DisplayableMovie(
+        title,
+        overview,
+        image
+    )
+}

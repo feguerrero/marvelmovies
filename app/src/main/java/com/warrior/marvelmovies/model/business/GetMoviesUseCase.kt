@@ -1,7 +1,8 @@
-package com.warrior.marvelmovies.model
+package com.warrior.marvelmovies.model.business
 
 import com.warrior.marvelmovies.model.remote.ApiMovieList
 import com.warrior.marvelmovies.model.remote.Movie
+import com.warrior.marvelmovies.view.DisplayableMovie
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
