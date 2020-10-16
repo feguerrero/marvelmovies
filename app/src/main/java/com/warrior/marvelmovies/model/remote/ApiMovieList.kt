@@ -1,7 +1,5 @@
 package com.warrior.marvelmovies.model.remote
 
-import android.os.Parcelable
-
 /**
  * Author: Felipe Guerrero
  */
