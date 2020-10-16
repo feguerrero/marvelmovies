@@ -35,4 +35,4 @@ class AppModule {
     }
 }
 
-const val BASE_URL = "https://api.themoviedb.org/4/list/"
+const val BASE_URL = "https://api.themoviedb.org/"

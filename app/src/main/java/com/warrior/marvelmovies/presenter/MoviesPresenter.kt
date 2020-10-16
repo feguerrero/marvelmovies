@@ -29,6 +29,19 @@ class MoviesPresenter(
     }
 
     override fun loadMovies() {
+        if (displayableMovies != null) {
+            showMovies(displayableMovies!!)
+        } else {
+            callGetMoviesUseCase()
+        }
+    }
+
+    private fun showMovies(movies: List<DisplayableMovie>) {
+        view?.showMovies(movies)
+        view?.hideLoading()
+    }
+
+    private fun callGetMoviesUseCase() {
         launch {
             try {
                 view?.showLoading()
@@ -37,8 +50,7 @@ class MoviesPresenter(
                         it.mapToDisplayableMovie()
                     }
                 }
-                view?.showMovies(displayableMovies!!)
-                view?.hideLoading()
+                showMovies(displayableMovies!!)
             } catch (e: Exception) {
                 view?.hideLoading()
             }

@@ -40,9 +40,7 @@ class MainActivity : AppCompatActivity(), ViewContract.View {
 
     override fun onResume() {
         super.onResume()
-        if (moviesRecyclerView.adapter == null) {
-            presenter.loadMovies()
-        }
+        presenter.loadMovies()
     }
 
     override fun showMovies(displayableMovies: List<DisplayableMovie>) {
