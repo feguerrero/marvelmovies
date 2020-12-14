@@ -2,33 +2,42 @@ package com.warrior.marvelmovies.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.warrior.marvelmovies.MyApplication
 import com.warrior.marvelmovies.R
-import com.warrior.marvelmovies.presenter.ViewContract
+import com.warrior.marvelmovies.viewmodel.MoviesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), ViewContract.View {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var presenter: ViewContract.Presenter
+    private val viewModel: MoviesViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (applicationContext as MyApplication).appComponent.inject(this)
-        setContentView(R.layout.activity_main)
-        presenter.bind(this)
-        setupRecyclerView()
-        savedInstanceState?.getParcelable<DisplayableMoviesWrapper>(MOVIE_LIST_PARAM)?.list?.let {
-            presenter.saveState(it)
+    private val displayableMoviesObserver = Observer<List<DisplayableMovie>> {
+        showMovies(it)
+    }
+
+    private val isViewLoadingObserver = Observer<Boolean> {
+        if (it) {
+            showLoading()
+        } else {
+            hideLoading()
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.unbind()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        setupRecyclerView()
+        setupViewModel()
+    }
+
+    private fun setupViewModel() {
+        viewModel.displayableMovies.observe(this, displayableMoviesObserver)
+        viewModel.isLoading.observe(this, isViewLoadingObserver)
     }
 
     private fun setupRecyclerView() {
@@ -38,32 +47,17 @@ class MainActivity : AppCompatActivity(), ViewContract.View {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.loadMovies()
-    }
-
-    override fun showMovies(displayableMovies: List<DisplayableMovie>) {
+    private fun showMovies(displayableMovies: List<DisplayableMovie>) {
         moviesRecyclerView.adapter = MoviesAdapter(displayableMovies)
     }
 
-    override fun showLoading() {
+    private fun showLoading() {
         loadingProgressBar.visibility = View.VISIBLE
         moviesRecyclerView.visibility = View.GONE
     }
 
-    override fun hideLoading() {
+    private fun hideLoading() {
         loadingProgressBar.visibility = View.GONE
         moviesRecyclerView.visibility = View.VISIBLE
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        val movieListWrapper = presenter.getState()
-        if (movieListWrapper.list != null) {
-            outState.putParcelable(MOVIE_LIST_PARAM, movieListWrapper)
-        }
-    }
 }
-
-const val MOVIE_LIST_PARAM = "MOVIE_LIST_PARAM"
