@@ -1,5 +1,6 @@
 package com.warrior.marvelmovies.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,12 +8,11 @@ import com.warrior.marvelmovies.model.business.GetMoviesUseCase
 import com.warrior.marvelmovies.view.DisplayableMovie
 import com.warrior.marvelmovies.view.mapToDisplayableMovie
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * @author Felipe E Guerrero
  */
-class MoviesViewModel @Inject constructor(
+class MoviesViewModel @ViewModelInject constructor(
     private val getMoviesUseCase: GetMoviesUseCase
 ) : ViewModel() {
 

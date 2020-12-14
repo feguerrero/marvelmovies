@@ -2,22 +2,19 @@ package com.warrior.marvelmovies.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.warrior.marvelmovies.MyApplication
 import com.warrior.marvelmovies.R
 import com.warrior.marvelmovies.viewmodel.MoviesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var viewModel: MoviesViewModel
+    private val viewModel: MoviesViewModel by viewModels()
 
     private val displayableMoviesObserver = Observer<List<DisplayableMovie>> {
         showMovies(it)
@@ -33,14 +30,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (applicationContext as MyApplication).appComponent.inject(this)
         setContentView(R.layout.activity_main)
         setupRecyclerView()
         setupViewModel()
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MoviesViewModel::class.java)
         viewModel.displayableMovies.observe(this, displayableMoviesObserver)
         viewModel.isLoading.observe(this, isViewLoadingObserver)
     }
