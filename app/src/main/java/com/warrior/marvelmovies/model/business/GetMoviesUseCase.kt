@@ -27,3 +27,5 @@ fun ApiMovieList.toMovieList(): List<Movie> {
         )
     }
 }
+
+fun foo() {}
