@@ -10,4 +10,6 @@ import com.warrior.marvelmovies.di.DaggerApplicationComponent
 class MyApplication : Application() {
 
     val appComponent: ApplicationComponent = DaggerApplicationComponent.create()
+    
+    fun foo() {}
 }
